@@ -139,7 +139,7 @@ export const experiences = [
     },
     {
         title: "Google Developer Student Clubs",
-        company_name: "USeP Obrero | CTO ",
+        company_name: "USeP Obrero | Chief Technology Officer ",
         icon: gdsc,
         iconBg: "#FFDA6D",
         date: "September 2023 - May 2024",
