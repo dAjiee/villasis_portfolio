@@ -22,6 +22,14 @@ import {
     typescript,
 } from "../assets/icons";
 
+export const name = "Alexander";
+
+export const about_description = "An aspiring software engineer with a knack for logical puzzles and a passion for leading the tech charge. From conquering math competitions to spearheading multiple clubs ranging from caring for the environment upto technology, I craft solutions that merge analytical finesse with a leader's edge.";
+
+export const leadership_description = "Charting a course through diverse tech territories, I've honed my craft alongside brilliant minds. Here's the snapshot:";
+
+export const projects_description = "From code to community: My cherished projects are a testament to the collaborative spirit of innovation. Delve into my open-source ventures and join in the evolution of technology. Your insights are the keystones of progress.";
+
 export const skills = [
     {
         imageUrl: java,

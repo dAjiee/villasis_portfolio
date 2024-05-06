@@ -9,9 +9,13 @@ const App = () => {
             <Router>
                 <Navbar />
                 <Routes>
+                    <Route path='/villasis_portfolio' element={<Home />} />
                     <Route path='/' element={<Home />} />
+                    <Route path='/villasis_portfolio/about' element={<About />} />
                     <Route path='/about' element={<About />} />
+                    <Route path='/villasis_portfolio/projects' element={<Projects />} />
                     <Route path='/projects' element={<Projects />} />
+                    <Route path='/villasis_portfolio/contact' element={<Contact />} />
                     <Route path='/contact' element={<Contact />} />
                 </Routes>
             </Router>

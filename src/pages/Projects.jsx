@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { projects } from '../constants';
+import { projects, projects_description } from '../constants';
 import { Link } from 'react-router-dom';
 import { arrow } from '../assets/icons';
 import CTA from '../components/CTA';
@@ -13,9 +13,7 @@ const Home = () => {
       </h1>
 
       <div className="mt-5 flex flex-col gap-3 text-slate-500">
-        <p> From code to community: My cherished projects are a testament to the 
-          collaborative spirit of innovation. Delve into my open-source ventures 
-          and join in the evolution of technology. Your insights are the keystones of progress. </p>
+        <p> {projects_description} </p>
       </div>
 
       <div className="flex flex-wrap my-20 gap-16">

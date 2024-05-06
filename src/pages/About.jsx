@@ -1,6 +1,6 @@
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
-import { skills, experiences } from '../constants'
+import { skills, experiences, leadership_description, about_description } from '../constants'
 import CTA from '../components/CTA';
 
 const Home = () => {
@@ -11,11 +11,7 @@ const Home = () => {
       </h1>
 
       <div className="mt-5 flex flex-col gap-3 text-slate-500">
-        <p>Hello, I'm Alexander, an aspiring software engineer with a knack for logical puzzles 
-          and a passion for leading the tech charge. From conquering math competitions to spearheading 
-          multiple clubs ranging from caring for the environment upto technology, 
-          I craft solutions that merge analytical finesse with a leader's edge.
-          </p>
+        <p> {about_description} </p>
       </div>
 
       <div className="py-10 flex flex-col">
@@ -41,7 +37,7 @@ const Home = () => {
         <h3 className="subhead-text">Leadership Experience</h3>
 
         <div className="mt-5 flex flex-col gap-3 text-slate-500">
-          <p> Charting a course through diverse tech territories, I've honed my craft alongside brilliant minds. Here's the snapshot: </p>
+          <p> {leadership_description} </p>
         </div>
 
         <div className="mt-12 flex">
