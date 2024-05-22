@@ -16,7 +16,6 @@ import {
     nextjs,
     nodejs,
     php,
-    pricewise,
     react,
     tailwindcss,
     typescript,
