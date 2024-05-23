@@ -1,11 +1,30 @@
 import React from 'react'
-
-import { projects, projects_description } from '../constants';
 import { Link } from 'react-router-dom';
 import { arrow } from '../assets/icons';
+import { useEffect, useState } from 'react';
 import CTA from '../components/CTA';
 
 const Home = () => {
+  const [data, setData] = useState({
+    projects: [],
+    projects_description: ""
+  });
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/projects/');
+      const data = await response.json();
+      setData(data);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <section className="max-container">
       <h1 className="head-text">
@@ -13,11 +32,11 @@ const Home = () => {
       </h1>
 
       <div className="mt-5 flex flex-col gap-3 text-slate-500">
-        <p> {projects_description} </p>
+        <p> {data.projects_description ? data.projects_description:""} </p>
       </div>
 
       <div className="flex flex-wrap my-20 gap-16">
-        {projects.map((project) => (
+        {data.projects && data.projects.map((project) => (
           <div className="lg:w-[400px] w-full" key={project.name}>
             <div className="block-container w-12 h-12">
               <div className={`btn-back rounded-xl ${project.theme}`} />

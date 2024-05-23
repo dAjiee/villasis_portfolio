@@ -1,17 +1,40 @@
 import { VerticalTimeline, VerticalTimelineElement } from 'react-vertical-timeline-component';
 import 'react-vertical-timeline-component/style.min.css';
-import { skills, experiences, leadership_description, about_description } from '../constants'
 import CTA from '../components/CTA';
+import { useEffect, useState } from 'react';
 
 const Home = () => {
+  const [data, setData] = useState({
+    skills: [],
+    experiences: [],
+    leadership_description: "",
+    about_description: "",
+    name: ""
+  });
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/api/aboutPage/');
+      const data = await response.json();
+      setData(data);
+      console.log(data);
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <section className="max-container">
       <h1 className="head-text">
-        Hello, I'm <span className="blue-gradient_text font-semibold drop-shadow">Alexander!</span>
+        Hello, I'm <span className="blue-gradient_text font-semibold drop-shadow">{data.name}!</span>
       </h1>
 
       <div className="mt-5 flex flex-col gap-3 text-slate-500">
-        <p> {about_description} </p>
+        <p> {data.about_description ? data.about_description:""} </p>
       </div>
 
       <div className="py-10 flex flex-col">
@@ -19,8 +42,8 @@ const Home = () => {
       </div>
 
       <div className="mt-16 flex flex-wrap gap-12">
-        {skills.map((skill) => (
-          <div className="block-container w-20 h-20">
+        {data.skills && data.skills.map((skill, index) => (
+          <div className="block-container w-20 h-20" key={"Skills" + index}>
             <div className="btn-back rounded-xl" />
             <div className="btn-front rounded-xl flex justify-center items-center">
               <img
@@ -37,14 +60,14 @@ const Home = () => {
         <h3 className="subhead-text">Leadership Experience</h3>
 
         <div className="mt-5 flex flex-col gap-3 text-slate-500">
-          <p> {leadership_description} </p>
+          <p> {data.leadership_description ? data.leadership_description:""} </p>
         </div>
 
         <div className="mt-12 flex">
           <VerticalTimeline>
-            {experiences.map((experience) => (
+            {data.experiences && data.experiences.map((experience, index) => (
               <VerticalTimelineElement
-                key={experience.company_name}
+                key={"Experience" + index}
                 date={experience.date}
                 icon={<div className="flex justify-center items-center w-full h-full">
                   <img

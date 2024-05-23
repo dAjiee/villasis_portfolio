@@ -8,6 +8,7 @@ import Plane from '../models/Plane'
 import HomeInfo from '../components/HomeInfo'
 import sakura from '../assets/sakura.mp3'
 import { soundoff, soundon } from '../assets/icons'
+import tutorialImage from '../assets/tutorial.gif'
 
 const Home = () => {
   const audioRef = useRef(new Audio(sakura));
@@ -16,6 +17,7 @@ const Home = () => {
   const [isRotating, setIsRotating] = useState(false);
   const [currentStage, setCurrentStage] = useState(1);
   const [isPlayingMusic, setisPlayingMusic] = useState(false);
+  const [showTutorial, setShowTutorial] = useState(true);
 
   useEffect(() => {
     if(isPlayingMusic) {
@@ -57,7 +59,15 @@ const Home = () => {
   
   const [islandScale, islandPosition, islandRotation] = adjustIslandForScreenSize();
   const [planeScale, planePosition] = adjustPlaneForScreenSize();
-  
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTutorial(false);
+    }, 6000);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <section className='w-full h-screen relative'>
       <div className='absolute top-28 left-0 right-0 z-10 flex items-center justify-center'>
@@ -99,6 +109,12 @@ const Home = () => {
           onClick={() => setisPlayingMusic(!isPlayingMusic)}
         />
       </div>
+
+      {showTutorial && (
+        <div className="fade-in-out">
+          <img src={tutorialImage} alt="Tutorial" />
+        </div>
+      )}
     </section>
   )
 }

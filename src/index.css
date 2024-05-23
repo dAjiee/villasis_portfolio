@@ -181,3 +181,16 @@ body:has(.card[data-color="green"]:hover) {
   box-shadow: 0.6vmin 0.6vmin #fff, 1vmin 1vmin #d2e4ff, 1vmin 1vmin #d2e4ff,
     0.65vmin 1vmin #d2e4ff, 1vmin 0.65vmin #d2e4ff;
 }
+
+/* index.css */
+@keyframes fadeInOut {
+  0%, 25% { opacity: 0; }
+  25%, 75% { opacity: 1; }
+  75%, 100% { opacity: 0; }
+}
+
+.fade-in-out {
+  @apply absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2;
+  animation: fadeInOut 8s ease-in-out;
+}
+

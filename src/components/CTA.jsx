@@ -1,7 +1,28 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { useEffect, useState } from 'react';
 
 const CTA = () => {
+    const [data, setData] = useState({
+        projects: [],
+        projects_description: ""
+      });
+    
+      const fetchData = async () => {
+        try {
+          const response = await fetch('http://127.0.0.1:8000/api/footer/');
+          const data = await response.json();
+          setData(data);
+          console.log(data);
+        } catch (error) {
+          console.error(error);
+        }
+      }
+    
+      useEffect(() => {
+        fetchData();
+      }, []);
+
     return (
         <section className="cta">
             <p className="cta-text">Have a project in mind?
