@@ -12,7 +12,7 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/projects/');
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}projects/`);
       const data = await response.json();
       setData(data);
       console.log(data);
@@ -39,7 +39,7 @@ const Home = () => {
         {data.projects && data.projects.map((project) => (
           <div className="lg:w-[400px] w-full" key={project.name}>
             <div className="block-container w-12 h-12">
-              <div className={`btn-back rounded-xl ${project.theme}`} />
+              <div className={`btn-back rounded-xl btn-back-${project.theme}`} />
               <div className="btn-front rounded-xl flex justify-center items-center">
                 <img
                   src={project.iconUrl}

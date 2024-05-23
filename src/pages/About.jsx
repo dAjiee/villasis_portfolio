@@ -14,7 +14,7 @@ const Home = () => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch('http://127.0.0.1:8000/api/aboutPage/');
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}aboutPage/`);
       const data = await response.json();
       setData(data);
       console.log(data);
