@@ -1,26 +1,38 @@
-import React, { useState, useRef, Suspense } from 'react'
-import emailjs from '@emailjs/browser'
+import React, { useState, useRef, Suspense } from 'react';
+import emailjs from '@emailjs/browser';
 import { Canvas } from '@react-three/fiber';
+import ReCAPTCHA from 'react-google-recaptcha';
 
-import Loader from '../components/Loader'
-
-import Minion from '../models/Minion'
+import Loader from '../components/Loader';
+import Minion from '../models/Minion';
 import useAlert from '../hooks/useAlert';
 import Alert from '../components/Alert';
 
 const Contact = () => {
   const formRef = useRef(null);
+  const recaptchaRef = useRef(null);
   const [form, setForm] = useState({ name: '', email: '', message: '' });
   const [isLoading, setIsLoading] = useState(false);
   const [currentAnimation, setCurrentAnimation] = useState('idle');
+  const [recaptchaToken, setRecaptchaToken] = useState(null);
 
-  const { alert, showAlert, hideAlert} = useAlert();
+  const { alert, showAlert, hideAlert } = useAlert();
 
   const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value })
+    setForm({ ...form, [e.target.name]: e.target.value });
   };
+
   const handleSubmit = (e) => {
     e.preventDefault();
+    const token = recaptchaRef.current.getValue();
+    if (!token) {
+      showAlert({
+        show: true,
+        text: 'Please complete the reCAPTCHA',
+        type: 'danger'
+      });
+      return;
+    }
     setIsLoading(true);
     setCurrentAnimation('Armature_Attack 04_full');
 
@@ -33,6 +45,7 @@ const Contact = () => {
         from_email: form.email,
         to_email: import.meta.env.VITE_APP_EMAILJS_EMAIL,
         message: form.message,
+        'g-recaptcha-response': token,
       },
       import.meta.env.VITE_APP_EMAILJS_PUBLIC_KEY
     ).then(() => {
@@ -41,14 +54,15 @@ const Contact = () => {
         show: true,
         text: 'Message sent successfully!',
         type: 'success'
-      })
-      
+      });
+
       setTimeout(() => {
         hideAlert();
         setCurrentAnimation('Armature_Stand Dance_full');
         setForm({ name: '', email: '', message: '' });
-      }, [3000]);
-      
+        recaptchaRef.current.reset();
+      }, 3000);
+
     }).catch((error) => {
       setIsLoading(false);
       setCurrentAnimation('Armature_Stand_full');
@@ -57,11 +71,16 @@ const Contact = () => {
         show: true,
         text: 'I didnt receive your message!',
         type: 'danger'
-      })
+      });
     });
   };
-  const handleFocus = () => {setCurrentAnimation('Armature_Walk 01_full')};
-  const handleBlur = () => {setCurrentAnimation('Armature_Stand_full')};
+
+  const handleFocus = () => { setCurrentAnimation('Armature_Walk 01_full') };
+  const handleBlur = () => { setCurrentAnimation('Armature_Stand_full') };
+
+  const onReCAPTCHAChange = (token) => {
+    setRecaptchaToken(token);
+  };
 
   return (
     <section className="relative flex lg:flex-row lg:gap-5 flex-col max-container h-[100vh]">
@@ -116,7 +135,13 @@ const Contact = () => {
             />
           </label>
 
-          <button type="submit" className="btn" disabled={isLoading} onFocus={handleFocus} onBlue={handleBlur}>
+          <ReCAPTCHA
+            ref={recaptchaRef}
+            sitekey={import.meta.env.VITE_APP_RECAPTCHA_SITE_KEY}
+            onChange={onReCAPTCHAChange}
+          />
+
+          <button type="submit" className="btn" disabled={isLoading} onFocus={handleFocus} onBlur={handleBlur}>
             {isLoading ? 'Sending...' : 'Send Message'}
           </button>
         </form>
@@ -143,7 +168,7 @@ const Contact = () => {
         </Canvas>
       </div>
     </section>
-  )
+  );
 }
 
-export default Contact
+export default Contact;
