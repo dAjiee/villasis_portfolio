@@ -17,6 +17,9 @@ const Navbar = () => {
                 <NavLink to="/projects" className={({ isActive }) => `${isActive ? 'text-blue-500' : 'text-black'} hover:blue-gradient_text`}>
                     Projects
                 </NavLink>
+                <NavLink to="/contact" className={({ isActive }) => `${isActive ? 'text-blue-500' : 'text-black'} hover:blue-gradient_text`}>
+                    Contact
+                </NavLink>
             </nav>
         </header>
     )
